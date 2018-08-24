@@ -1,0 +1,89 @@
+<ion-header>
+      
+</ion-header>
+
+
+<ion-content padding class="big_wrapper">
+    <ion-fab right top icon-only>
+        <button ion-fab mini><ion-icon  name="arrow-dropleft"></ion-icon></button>
+          <ion-fab-list side="left">
+            <button ion-fab (click)="login()"><ion-icon name="log-in"></ion-icon></button>
+            <button ion-fab (click)="signup()"> <ion-icon name="contacts"></ion-icon></button>
+            <button ion-fab (click)="rooms()"> <ion-icon name="home"></ion-icon></button>
+          </ion-fab-list>
+      </ion-fab>
+
+      <h2>Booking</h2>
+<div class="wrapper">
+    <ion-list>
+        <ion-item>
+            <ion-label fixed>Name</ion-label>
+            <ion-input #Name type="text"></ion-input>
+        </ion-item>
+
+          <ion-item>
+              <ion-label fixed>Surname</ion-label>
+              <ion-input #surname type="text"></ion-input>
+           </ion-item>
+
+            <ion-item>
+                <ion-label fixed>Email</ion-label>
+                <ion-input #email type="email"></ion-input>
+            </ion-item>
+              
+            <ion-item>
+                <ion-label fixed>Contact</ion-label>
+                <ion-input #contact type="number"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label fixed>Address</ion-label>
+                <ion-input #address type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label fixed>check in</ion-label>
+                <ion-input #dateIn type="date"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+                <ion-label fixed>Check out</ion-label>
+                <ion-input #dateOut type="date"></ion-input>
+            </ion-item>  
+            
+            <ion-item>
+                <ion-label>Room type</ion-label>
+                <!-- <ion-input #room type="text"></ion-input> -->
+                <!-- <ion-select [(ngModel)]="Rooms"> -->
+                 <ion-select #Rooms>   
+                    <ion-option value="single">Single</ion-option>
+                    <ion-option value="double">Double</ion-option>
+                </ion-select>    
+            </ion-item>
+
+            <ion-item>
+                 <ion-label>Adult
+                    <ion-select #adult>
+                      <ion-option value="0">0</ion-option>
+                      <ion-option value="1">1</ion-option>
+                      <ion-option value="2">2</ion-option>
+                      <ion-option value="3">3</ion-option>
+                      <ion-option value="4">4</ion-option>
+                      <ion-option value="5">5</ion-option>
+                    </ion-select> </ion-label>
+
+                 <ion-label>Children
+                 <ion-select #Children >
+                    <ion-option value="0">0</ion-option>
+                    <ion-option value="1">1</ion-option>
+                    <ion-option value="2">2</ion-option>
+                    <ion-option value="3">3</ion-option>
+                    <ion-option value="4">4</ion-option>
+                    <ion-option value="5">5</ion-option>
+                  </ion-select> </ion-label>      
+            </ion-item>
+      </ion-list>
+
+    <button ion-button block full color="primary" (click)="book(Name.value,surname.value,email.value,contact.value,address.value,dateIn.value,dateOut.value,Rooms.value,Children.value,address.value)">Book</button>
+  </div>
+</ion-content>

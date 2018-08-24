@@ -1,0 +1,38 @@
+page-login {
+
+    .big_wrapper{
+
+    }
+
+    .wrapper{
+       margin-top: 30%;
+    }  
+
+    .textArea{
+       border-radius: 40px;
+       background-color: aliceblue;
+    }
+
+    .textArea1{
+        margin-top: 2%;
+        -webkit-border-radius: 40%;
+        -moz-border-radius: 40%;
+        border-radius: 40px;
+        background-color: aliceblue;
+        height: 5%;
+     }
+
+     h2{
+         margin-left:4%;
+     }
+
+     .signup{
+         background: white;
+         text-align: center;
+     }
+
+     .btn{
+        background: white; 
+        color: rgb(0, 153, 255);
+     }
+}

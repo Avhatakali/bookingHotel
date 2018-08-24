@@ -1,0 +1,7 @@
+{
+  "name": "bookingHotel",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
