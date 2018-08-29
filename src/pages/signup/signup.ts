@@ -20,13 +20,11 @@ declare var firebase;
 })
 export class SignupPage {
   usersArr = new Array();
-  database;
+
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
-    public alertCtrl: AlertController) {
-      // this.database = firebase.database();
-      // var ref = this.database.ref('users') ;
-      // ref.on('value', this.getData, this.errData);
+    public alertCtrl: AlertController){
+      this.usersArr = [];
 
       firebase.database().ref('users').on('value', (data: any) => {
 
@@ -74,16 +72,22 @@ export class SignupPage {
     console.log('ionViewDidLoad SignupPage');
   }
 
-    register(name,surname,email,password ){
+    register(name,surname,email,password){
+      var userID = firebase.auth().currentUser.uid;
 
-      if(name != '' && name != null && surname != '' && surname != null && email != '' && email != null && password != '' && name != null ){
-        firebase.auth().createUserWithEmailAndPassword(email,password);
+      if(name != '' && name != null && surname != '' && surname != null && email != '' && email != null && password != '' && name != null){
+        firebase.auth().createUserWithEmailAndPassword(email,password).then(()=>{
 
-        var userID = firebase.auth().currentUser.uid;
-        firebase.database().ref('users/'+ userID).push({
-          name: name,
-          surname: surname,
-        });
+          if(userID != null){
+            firebase.database().ref('users/'+ userID).push({
+              name: name,
+              surname: surname,
+
+            });
+          }else{
+           alert('not created');
+          }
+      })
         const prompt = this.alertCtrl.create({
           title: 'Sign up',
           message: "you succefully sign up !",
@@ -93,7 +97,7 @@ export class SignupPage {
               text: 'OK',
               handler: data => {
                 console.log('Saved clicked');
-                this.navCtrl.push(RoomsPage, {userIdentification:userID}) 
+                this.navCtrl.push(RoomsPage);
               }
             }
           ]
@@ -117,7 +121,7 @@ export class SignupPage {
         ]
       });
       prompt.present(); 
-      }
+    }
   } 
 
     rooms(){
@@ -127,5 +131,4 @@ export class SignupPage {
     login(){
       this.navCtrl.setRoot(LoginPage);
     }
-
 }

@@ -4,6 +4,8 @@ import { LoginPage } from '../login/login';
 import { SignupPage } from '../signup/signup';
 import { BookingPage } from '../booking/booking';
 
+declare var firebase;
+
 /**
  * Generated class for the RoomsPage page.
  *
@@ -22,6 +24,26 @@ export class RoomsPage {
   userid = this.navParams.get('userIdentification');
   constructor(public navCtrl: NavController, 
     public navParams: NavParams) {
+
+      console.log(this.usersArr, this.userid);
+
+      firebase.auth().onAuthStateChanged((user)=>{
+        if (user) {
+          // User is signed in.
+          var Name = user.displayName;
+          var email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          var providerData = user.providerData;
+
+          console.log(uid +'logged-in !'+ Name);
+          
+        } else {
+          console.log('Not logged in !');
+        }
+      });
   }
 
   ionViewDidLoad() {
@@ -41,6 +63,10 @@ export class RoomsPage {
   }
 
   price(){
+    this.navCtrl.setRoot(BookingPage);
+  }
+
+  profile(){
     this.navCtrl.setRoot(BookingPage);
   }
 }

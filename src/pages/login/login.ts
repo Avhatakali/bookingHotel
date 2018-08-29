@@ -19,8 +19,31 @@ declare var firebase;
 })
 export class LoginPage {
 
+  
+  usersArr = new Array();
+  userid = this.navParams.get('userIdentification');
   constructor(public navCtrl: NavController, 
-    public navParams: NavParams) {
+    public navParams: NavParams){
+
+      console.log(this.usersArr, this.userid);
+
+      firebase.auth().onAuthStateChanged((user)=>{
+        if (user) {
+          // User is signed in.
+          var Name = user.displayName;
+          var email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          var providerData = user.providerData;
+
+          console.log(uid +'logged-in !'+ Name);
+          
+        } else {
+          console.log('Not logged in !');
+        }
+      });
   }
 
   ionViewDidLoad() {
@@ -40,29 +63,28 @@ export class LoginPage {
   }
 
   logIn(email,password){
-    // const email = email.value;
-    // const email = email.value;
 
-    //sign in
-    firebase.auth().signInWithEmailAndPassword(email,password)
-    .catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode == 'auth/wrong-password') {
-        alert('Wrong password.');
-      } else {
-        alert(errorMessage);
-      }
-      console.log(error);
-    });
-
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          console.log(user +'logged-in');
-        }else{
-          console.log('Not logged in !');
-        }
-      });
+    var userID = firebase.auth().currentUser.uid;
+    try {
+      
+      //sign in
+      firebase.auth().signInWithEmailAndPassword(email,password).then(()=>{
+  
+      this.navCtrl.setRoot(RoomsPage);
+      }).catch((error)=>{
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+          if(errorCode == 'auth/wrong-password'){
+            alert('Wrong password.'); 
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+        });
+    }
+    catch(e) {
+      console.log(e);
+     }
    }
 }

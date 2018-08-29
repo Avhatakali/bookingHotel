@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Item } from 'ionic-angular';
 import {AlertController} from 'ionic-angular';
+import { RoomsPage } from '../rooms/rooms';
 declare var firebase;
 /**
  * Generated class for the ProfilePage page.
@@ -42,7 +43,9 @@ export class ProfilePage {
           this.bookingArr.push(obj);
           console.log(this.bookingArr);
         };
-    })      
+    })  
+    
+    console.log(this.userid);
   }
 
   ionViewDidLoad() {
@@ -57,15 +60,15 @@ export class ProfilePage {
 
   update(u){
 
-    for(let index = 0; index < this.bookingArr.length; index++){
-      var Name = this.bookingArr[index].Name;
-      var Surname = this.bookingArr[index].Surname;
-      var username = this.bookingArr[index].Contact;
-      var role = this.bookingArr[index].Email;
-      var id =  this.bookingArr[index].Address;
-      var password =  this.bookingArr[index].Children;
+  //   for(let index = 0; index < this.bookingArr.length; index++){
+  //     var Name = this.bookingArr[index].Name;
+  //     var Surname = this.bookingArr[index].Surname;
+  //     var username = this.bookingArr[index].Contact;
+  //     var role = this.bookingArr[index].Email;
+  //     var id =  this.bookingArr[index].Address;
+  //     var password =  this.bookingArr[index].Children;
 
-  }
+  // }
 
   let alert = this.alertCtrl.create({
     title: 'Update',
@@ -106,7 +109,7 @@ export class ProfilePage {
         
           const prompt = this.alertCtrl.create({
             title: 'successful',
-            message: "canceled update !",
+            message: " update !",
   
           buttons: [
             {
@@ -136,7 +139,7 @@ export class ProfilePage {
               this.bookingArr = [];
               var updates = { Name:data.Name};
               firebase.database().ref('booking/').child(u).update(updates);
-              this.navCtrl.setRoot(ProfilePage);
+              // this.navCtrl.setRoot(ProfilePage);
             }
           }
         ]
@@ -147,6 +150,14 @@ export class ProfilePage {
     ]
   });
   alert.present();
+  }
+
+  logout(){
+
+  }
+
+  rooms(){
+   this.navCtrl.setRoot(RoomsPage); 
   }
 
 }

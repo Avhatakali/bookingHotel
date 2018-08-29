@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class Provider {
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient){
     console.log('Hello Provider Provider');
   }
 

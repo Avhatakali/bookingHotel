@@ -10,8 +10,8 @@
 
 
 <ion-content padding class="big_wrapper">
-        <ion-fab right top icon-only>
-                <button ion-fab mini><ion-icon  name="arrow-dropleft"></ion-icon></button>
+        <ion-fab  right top icon-only>
+                <button class="top_btn" ion-fab mini><ion-icon  name="arrow-dropleft"></ion-icon></button>
                   <ion-fab-list side="left">
                     <button ion-fab (click)="login()"><ion-icon name="log-in"></ion-icon></button>
                     <button ion-fab (click)="rooms()"> <ion-icon name="home"></ion-icon></button>
@@ -20,30 +20,30 @@
    <div class="wrapper">
        <h2>Sign up</h2>
     <ion-list>
-        <ion-item>
+        <ion-item class="wrap">
             <ion-icon item-start name="person"></ion-icon>
             <ion-label fixed>Name</ion-label>
             <ion-input #name type="text"></ion-input>
           </ion-item>
 
-          <ion-item>
+          <ion-item class="wrap">
               <ion-icon item-start name="person"></ion-icon>
               <ion-label fixed>Surname</ion-label>
               <ion-input #surname type="text"></ion-input>
             </ion-item>
 
-          <ion-item>
+          <ion-item class="wrap">
               <ion-icon item-start name="mail"></ion-icon>
               <ion-label fixed>email</ion-label>
               <ion-input #email type="email"></ion-input>
           </ion-item>
               
-          <ion-item>
+          <ion-item class="wrap">
               <ion-icon item-start name="lock"></ion-icon>
               <ion-label fixed>Password</ion-label>
               <ion-input #password type="password"></ion-input>
           </ion-item>      
       </ion-list>
     </div>
-    <button ion-button full round color="primary" (click)="register(name.value,surname.value,email.value,password.value)">sign up</button>
+    <button class="btn" ion-button full round color="primary" (click)="register(name.value,surname.value,email.value,password.value)">sign up</button>
 </ion-content>

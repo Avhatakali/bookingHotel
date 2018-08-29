@@ -1,23 +1,33 @@
 page-home {
+
   .big_wrapper{
       align-items: center;
       text-align: center;
-      background-image: url("../../assets/imgs/out1.jpg");
+      background-image: linear-gradient(rgba(0,0,0,0.4)),url("../../assets/imgs/home1.jpg");
       background-size: cover; 
-    
+
   }
 
   .wrapper{
-    margin-top: 10%;
-
+    margin-top: 25%;
   }
   
   .button{
-    margin-top: 95%;
+    margin-top: 82%;
   }
+
   .btn{
       color: white;
       font-size: 1em;
-
   }
+
+  h2{
+    color: white;
+  }
+
+  .head{
+    text-align: center;
+    font-size: 2em;
+  }
+
 }

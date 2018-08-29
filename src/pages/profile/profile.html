@@ -6,11 +6,6 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>profile</ion-title>
-
-    
-  </ion-navbar>
 
 </ion-header>
 
@@ -19,14 +14,14 @@
     <ion-fab right top icon-only>
         <button ion-fab mini><ion-icon  name="arrow-dropleft"></ion-icon></button>
           <ion-fab-list side="left">
-            <button ion-fab (click)="login()"><ion-icon name="log-in"></ion-icon></button>
-            <button ion-fab (click)="signup()"> <ion-icon name="contacts"></ion-icon></button>
+            <button ion-fab (click)="logout()"><ion-icon name="log-out"></ion-icon></button>
+            <!-- <button ion-fab (click)="signup()"> <ion-icon name="contacts"></ion-icon></button> -->
             <button ion-fab (click)="rooms()"> <ion-icon name="home"></ion-icon></button>
           </ion-fab-list>
       </ion-fab>
     <ion-list *ngFor="let v of bookingArr; let u = index">
         <ion-item>
-           <h2>{{v.item}} </h2>
+           <h2>{{v.item}}</h2>
            <button ion-button color="danger"(click)="Del(v.key)">Delete</button>
            <button ion-button color="primary" (click)="update(v.key)">Update</button>
         </ion-item>
