@@ -18,38 +18,86 @@ declare var firebase;
 export class ProfilePage {
 
   bookingArr = new Array();
-  userid = this.navParams.get('userIdentification');
+  userId = this.navParams.get('userIdentification');
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public alertCtrl: AlertController) {
 
-      // this.bookingArr = [];
+      
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          var displayName = user.displayName;
+          var email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          var providerData = user.providerData;
+          
+          console.log(' User is signed in. '+uid)
+        } else {
+          // User is signed out.
+      console.log('User is signed out')
+        }
+      });
 
-      firebase.database().ref('booking/'+this.userid).on('value', (data: any) => {
+      this.bookingArr = [];
 
-        var dt = data.val();
-        console.log(dt);
-   
-        var keys: any = Object.keys(dt);
-   
-        for (var i = 0; i < keys.length; i++) {
-          var k = keys[i];
-   
-          let obj = {
-            Name: dt[k].Name,
-            surname: dt[k].Surname,
-            Email: dt[k].Email,
-            Contact: dt[k].Contact,
+        let ref = firebase.database().ref('booking');
+        ref.once("value").then((snapshot) => {
+          //getting the user keys
+          let users = snapshot.val();
+          users = Object.keys(users);
+     
+          for(let i = 0; i < users.length; i++){
+            let bookingValues = snapshot.child(users[i]).val();
+            let bookingKeys = Object.keys(bookingValues);
+            console.log(bookingKeys.length);
 
-            key: k
-          }
-          this.bookingArr.push(obj);
-          console.log(this.bookingArr);
-        };
-    })  
+            for(let j = 0; j < bookingKeys.length; j++){
+              let booking = snapshot.child(users[i]+'/'+bookingKeys[j]).val();
+              let bookingObj = {
+                userid: users[i],
+                name: booking.Name,
+                surname: booking.Surname,
+              }
     
-    console.log(this.userid);
+              this.bookingArr.push(bookingObj);
+              console.log(this.bookingArr);
+            }
+          }
+          })
+
+    //   firebase.database().ref('booking/').on('value', (data: any) => {
+
+    //     var dt = data.val();
+    //     console.log(dt);
+   
+    //     var keys: any = Object.keys(dt);
+    //     console.log(keys);
+    //     for (var i = 0; i < keys.length; i++) {
+    //       var k = keys[i];
+    //       console.log(k);
+   
+    //         for (var e = 0; e < k.length; e++){
+    //         var t = this.bookingArr[e];
+    //         console.log(t);
+    //         break;
+    //         }
+
+    //       let obj = {
+    //         key: dt.k,
+    //         Name: dt[k].Name,
+    //         Surname: dt[k].Surname,
+    //       }
+    //       this.bookingArr.push(obj);
+    //       console.log(this.bookingArr); 
+    //     };
+    // })  
+    
+    // console.log(this.userId);
   }
 
   ionViewDidLoad() {
@@ -59,7 +107,7 @@ export class ProfilePage {
     
   Del(v){
     this.bookingArr = [];
-    firebase.database().ref('booking/'+this.userid).child(v).remove();
+    firebase.database().ref('booking/'+this.userId).child(v).remove();
   }
 
   update(v){
@@ -71,7 +119,6 @@ export class ProfilePage {
   //     var role = this.bookingArr[index].Email;
   //     var id =  this.bookingArr[index].Address;
   //     var password =  this.bookingArr[index].Children;
-
   // }
 
   let alert = this.alertCtrl.create({
@@ -116,9 +163,9 @@ export class ProfilePage {
                 let updates = { Name:data.Name};
                 this.bookingArr.push(updates);
 
-                firebase.database().ref('booking/').child(v).update(updates);
+                firebase.database().ref('booking/'+this.userId).child(v).update(updates);
                 console.log('Save Clicked'+ data.Name);
-            this.navCtrl.setRoot(ProfilePage);    
+            // this.navCtrl.setRoot(ProfilePage);    
           }
       },
       {

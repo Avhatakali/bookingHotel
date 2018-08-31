@@ -21,8 +21,8 @@
       </ion-fab>
     <ion-list *ngFor="let v of bookingArr; let u = index">
         <ion-item>
-           <h2>{{v.Name}}</h2>
-           <h2>{{v.Surname}}</h2>
+           <h2>{{v.name}}</h2>
+           <h2>{{v.surname}}</h2>
            <button ion-button color="danger"(click)="Del(v.key)">Delete</button>
            <button ion-button color="primary" (click)="update(v.key)">Update</button>
         </ion-item>

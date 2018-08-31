@@ -73,7 +73,7 @@ export class SignupPage {
     console.log('ionViewDidLoad SignupPage');
   }
 
-    register(name,surname,email,password,displayName){
+    register(name,surname,email,password){
       
       if(name != '' && name != null && surname != '' && surname != null && email != '' && email != null && password != '' && name != null){
         firebase.auth().createUserWithEmailAndPassword(email,password).then(()=>{

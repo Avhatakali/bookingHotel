@@ -67,14 +67,14 @@ export class RoomsPage {
   }
 
   book(){
-    this.navCtrl.setRoot(BookingPage);
+    this.navCtrl.setRoot(BookingPage,{userid:this.userid});
   }
 
   price(){
-    this.navCtrl.setRoot(BookingPage);
+    this.navCtrl.setRoot(BookingPage,{userid:this.userid});
   }
 
   profile(){
-    this.navCtrl.setRoot(ProfilePage);
+  this.navCtrl.setRoot(ProfilePage,{userid:this.userid});
   }
 }

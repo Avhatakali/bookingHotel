@@ -74,7 +74,7 @@ export class BookingPage {
                 text: 'OK',
                 handler: data => {
                   console.log('Saved clicked');
-                  // this.navCtrl.setRoot(RoomsPage);
+                  this.navCtrl.setRoot(ProfilePage);
                 }
               }
             ]

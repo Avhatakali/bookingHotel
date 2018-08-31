@@ -29,20 +29,6 @@ export class LoginPage {
 
       console.log(this.usersArr, this.userid);
 
-      // firebase.auth().onAuthStateChanged((user)=>{
-      //   if (user) {
-      //     // User is signed in.
-      //     var Name = user.displayName;
-      //     var email = user.email;
-      //     var uid = user.uid;
-
-      //     // console.log(uid +'logged-in !'+ Name);
-          
-      //   } else {
-      //     console.log('Not logged in !');
-      //   }
-      // });
-
       firebase.auth().signOut().then(function() {
         // Sign-out successful.
         console.log('Not logged in')
