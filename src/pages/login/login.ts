@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SignupPage } from '../signup/signup';
 import { RoomsPage } from '../rooms/rooms';
+import { LoadingController } from 'ionic-angular';
 
 declare var firebase;
 
@@ -19,57 +20,72 @@ declare var firebase;
 })
 export class LoginPage {
 
-  
   usersArr = new Array();
   userid = this.navParams.get('userIdentification');
+
   constructor(public navCtrl: NavController, 
-    public navParams: NavParams){
+    public navParams: NavParams,
+    public loadingCtrl: LoadingController){
 
       console.log(this.usersArr, this.userid);
 
-      firebase.auth().onAuthStateChanged((user)=>{
-        if (user) {
-          // User is signed in.
-          var Name = user.displayName;
-          var email = user.email;
-          var emailVerified = user.emailVerified;
-          var photoURL = user.photoURL;
-          var isAnonymous = user.isAnonymous;
-          var uid = user.uid;
-          var providerData = user.providerData;
+      // firebase.auth().onAuthStateChanged((user)=>{
+      //   if (user) {
+      //     // User is signed in.
+      //     var Name = user.displayName;
+      //     var email = user.email;
+      //     var uid = user.uid;
 
-          console.log(uid +'logged-in !'+ Name);
+      //     // console.log(uid +'logged-in !'+ Name);
           
-        } else {
-          console.log('Not logged in !');
-        }
+      //   } else {
+      //     console.log('Not logged in !');
+      //   }
+      // });
+
+      firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        console.log('Not logged in')
+      }).catch(function(error) {
+        // An error happened.
+        console.log('sign out error');
       });
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  signup(){
-    this.navCtrl.setRoot(SignupPage);
-  }
+    signup(){
+      this.navCtrl.setRoot(SignupPage);
+    }
 
-  rooms(){
-    this.navCtrl.setRoot(RoomsPage);
-  }
+    rooms(){
+      this.navCtrl.setRoot(RoomsPage);
 
-  login(){
-    this.navCtrl.setRoot(SignupPage);
-  }
+
+    }
+
+    login(){
+      this.navCtrl.setRoot(SignupPage);
+    }
 
   logIn(email,password){
 
-    var userID = firebase.auth().currentUser.uid;
+    const loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 3000
+    });
+    loader.present();
+
+    // var userid= firebase.auth().currentUser.uid;
     try {
       
       //sign in
       firebase.auth().signInWithEmailAndPassword(email,password).then(()=>{
   
+      // this.navCtrl.setRoot(RoomsPage, {userid:userid});
       this.navCtrl.setRoot(RoomsPage);
       }).catch((error)=>{
         // Handle Errors here.

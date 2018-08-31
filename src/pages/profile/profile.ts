@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Item } from 'ionic-angular';
+import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import {AlertController} from 'ionic-angular';
 import { RoomsPage } from '../rooms/rooms';
 declare var firebase;
@@ -24,20 +24,24 @@ export class ProfilePage {
     public navParams: NavParams,
     public alertCtrl: AlertController) {
 
-      this.bookingArr = [];
+      // this.bookingArr = [];
 
-      firebase.database().ref('booking').on('value', (data: any) => {
+      firebase.database().ref('booking/'+this.userid).on('value', (data: any) => {
 
-        var name = data.val();
-        console.log(name);
+        var dt = data.val();
+        console.log(dt);
    
-        var keys: any = Object.keys(name);
+        var keys: any = Object.keys(dt);
    
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
    
           let obj = {
-            item: name[k].Name,
+            Name: dt[k].Name,
+            surname: dt[k].Surname,
+            Email: dt[k].Email,
+            Contact: dt[k].Contact,
+
             key: k
           }
           this.bookingArr.push(obj);
@@ -55,10 +59,10 @@ export class ProfilePage {
     
   Del(v){
     this.bookingArr = [];
-    firebase.database().ref('booking/').child(v).remove();
+    firebase.database().ref('booking/'+this.userid).child(v).remove();
   }
 
-  update(u){
+  update(v){
 
   //   for(let index = 0; index < this.bookingArr.length; index++){
   //     var Name = this.bookingArr[index].Name;
@@ -103,51 +107,27 @@ export class ProfilePage {
     ],
     buttons: [
       {
-        text: 'Cancel',
-        role: 'cancel',
+        text: 'update',
         handler: data => {
-        
-          const prompt = this.alertCtrl.create({
-            title: 'successful',
-            message: " update !",
-  
-          buttons: [
-            {
-              text: 'OK',
-              handler: data => {
-                console.log('Saved clicked');
-                this.navCtrl.setRoot(ProfilePage);
-              }
-            }
-          ]
-        });
-        prompt.present()
-        }
+                this.bookingArr = [];
+                console.log(data.Name);
+                console.log(v);
+
+                let updates = { Name:data.Name};
+                this.bookingArr.push(updates);
+
+                firebase.database().ref('booking/').child(v).update(updates);
+                console.log('Save Clicked'+ data.Name);
+            this.navCtrl.setRoot(ProfilePage);    
+          }
       },
       {
-        text: 'Update',
+        text: 'cancel',
         handler: data => {
-      
-        const prompt = this.alertCtrl.create({
-          title: 'successful',
-          message: " your booking details have being updated !",
-
-        buttons: [
-          {
-            text: 'OK',
-            handler: data => {
-              this.bookingArr = [];
-              var updates = { Name:data.Name};
-              firebase.database().ref('booking/').child(u).update(updates);
-              // this.navCtrl.setRoot(ProfilePage);
+              console.log('cancel clicked');                            
             }
           }
-        ]
-      });
-      prompt.present()
-        }
-      }   
-    ]
+      ]
   });
   alert.present();
   }

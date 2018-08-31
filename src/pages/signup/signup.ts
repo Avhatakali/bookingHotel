@@ -20,6 +20,7 @@ declare var firebase;
 })
 export class SignupPage {
   usersArr = new Array();
+  userid = this.navParams.get('userIdentification');
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -72,17 +73,16 @@ export class SignupPage {
     console.log('ionViewDidLoad SignupPage');
   }
 
-    register(name,surname,email,password){
-      var userID = firebase.auth().currentUser.uid;
-
+    register(name,surname,email,password,displayName){
+      
       if(name != '' && name != null && surname != '' && surname != null && email != '' && email != null && password != '' && name != null){
         firebase.auth().createUserWithEmailAndPassword(email,password).then(()=>{
 
-          if(userID != null){
-            firebase.database().ref('users/'+ userID).push({
+        var userid = firebase.auth().currentUser;
+          if(userid != null){
+            firebase.database().ref('users/'+ this.userid).push({
               name: name,
               surname: surname,
-
             });
           }else{
            alert('not created');
